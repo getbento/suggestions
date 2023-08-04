@@ -45,7 +45,6 @@ List.prototype.isVisible = function() {
 };
 
 List.prototype.draw = function() {
-  this.element.innerHTML = '';
 
   if (this.items.length === 0) {
     this.hide();
@@ -60,27 +59,42 @@ List.prototype.draw = function() {
 };
 
 List.prototype.drawItem = function(item, active) {
-  var li = document.createElement('li'),
-    a = document.createElement('a');
-
-  if (active) {
-    li.className += ' active';
-    li.id = 'active_item';
+  let li = null
+  let anchor = null
+  const currentItem = Array.from(this.element.children).find((ch) => {
+    return ch.id === item.original.id
+  })
+  if (currentItem) {
+    li = currentItem
+    anchor = currentItem.childNodes[0]
+  } else {
+    li = document.createElement('li')
+    anchor = document.createElement('a')
+  
+    li.id = item.original.id
     li.role = 'option'
+
+    anchor.innerHTML = item.string;
+
+    li.appendChild(anchor);
+    this.element.appendChild(li);
+
+    li.addEventListener('mousedown', function() {
+      this.selectingListItem = true;
+    }.bind(this));
+
+    li.addEventListener('mouseup', function() {
+      this.handleMouseUp.call(this, item);
+    }.bind(this));
   }
 
-  a.innerHTML = item.string;
-
-  li.appendChild(a);
-  this.element.appendChild(li);
-
-  li.addEventListener('mousedown', function() {
-    this.selectingListItem = true;
-  }.bind(this));
-
-  li.addEventListener('mouseup', function() {
-    this.handleMouseUp.call(this, item);
-  }.bind(this));
+  if (active) {
+    li.classList.add('active');
+    li.ariaSelected = 'true';
+  } else {
+    li.classList.remove('active')
+    li.removeAttribute('aria-selected');
+  }
 };
 
 List.prototype.handleMouseUp = function(item) {
