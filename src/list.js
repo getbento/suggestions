@@ -63,7 +63,11 @@ List.prototype.drawItem = function(item, active) {
   var li = document.createElement('li'),
     a = document.createElement('a');
 
-  if (active) li.className += ' active';
+  if (active) {
+    li.className += ' active';
+    li.id = 'active_item';
+    li.role = 'option'
+  }
 
   a.innerHTML = item.string;
 
