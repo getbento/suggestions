@@ -61,9 +61,7 @@ List.prototype.draw = function() {
 List.prototype.drawItem = function(item, active) {
   let li = null
   let anchor = null
-  const currentItem = Array.from(this.element.children).find((ch) => {
-    return ch.id === item.original.id
-  })
+  const currentItem = Array.from(this.element.children).find(child => child.id === item.original.id)
   if (currentItem) {
     li = currentItem
     anchor = currentItem.childNodes[0]
