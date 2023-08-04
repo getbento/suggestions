@@ -80,6 +80,7 @@ Suggestions.prototype.handleKeyDown = function(e) {
         this.value(this.list.items[this.list.active].original);
         this.list.hide();
       }
+    break;
     case 9: // TAB
       if (!this.list.isEmpty()) {
         this.list.hide();
