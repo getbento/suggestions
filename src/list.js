@@ -32,6 +32,7 @@ List.prototype.add = function(item) {
 };
 
 List.prototype.clear = function() {
+  this.element.innerHTML = '';
   this.items = [];
   this.active = undefined;
 };
