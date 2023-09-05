@@ -89,6 +89,7 @@ List.prototype.drawItem = function(item, active) {
 
   if (active) {
     li.classList.add('active');
+    this.component.el.setAttribute('aria-activedescendant', li.id)
     li.ariaSelected = 'true';
   } else {
     li.classList.remove('active')
